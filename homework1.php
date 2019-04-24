@@ -16,11 +16,80 @@
     2. Описать свойства класса из п.1 (состояние).<br>
     3. Описать поведение класса из п.1 (методы).<br>
     4. Придумать наследников класса из п.1. Чем они будут отличаться?</h4>
-    <p>1. Один из самых главных классов, суперкласс, это, конечно же, каталог товаров интернет-магазина.</p>
-    <p>2. Свойства каталога как класса - располагается на главной странице магазина, виден всем посетителям и авторизованным пользователям, доступен также аминистрации сайта.</p>
-    <p>3. Поведение класса каталог товаров - при нажатии на любую ссылку каталога осуществляется переход на нужный уровень каталога или страницу товара.</p>
-    <p>4. Наследниками каталога или подклассом как раз и будет подкаталог (раздел каталога) или страница товара. Конкретный товар уже будет экземпляром класса. Каталог и подкаталог будут иметь общие совйства и поведение, такие, как, переход по клику на ссылки, отображение на главной странице магазина, характеристики группы товаров.... У товара добавится персональное свойство - своя страница, название, артикул, цена, персональные характеристики товара.</p>
-    <hr>
+    
+<?php
+
+class mainCatalog {
+    private $id; // Идентификационный номер
+    private $sectionName; // Название раздела товаров
+    private $categoryName; // Название категории товаров
+    private $productName; // название товара
+    private $productPrice; // цена товара
+    public function __construct($id, $sectionName, $categoryName, $productName, $productPrice) {
+        $this -> id = $id;
+        $this -> sectionName = $sectionName;
+        $this -> categoryName = $categoryName;
+        $this -> productName = $productName;
+        $this -> productPrice = $productPrice;
+    }
+    public function getId(){
+        return $this -> id;
+    }    
+    public function getSectionName(){
+        return $this -> sectionName;
+    }    
+    public function getCategoryName(){
+        return $this -> categoryName;
+    }
+    public function getproductName(){
+        return $this -> productName;
+    }
+    public function getproductPrice(){
+        return $this -> productPrice;
+    }
+    protected function getInfo() {
+        $info = "Идентификационный номер: " . $this -> id . "<br> Название раздела товаров: " . $this -> sectionName . "<br> Название категории товаров: " . $this -> categoryName . "<br> Название товара: " . $this -> productName . "<br> Цена: " . $this -> productPrice . " рублей"  . "<br>";
+        return $info;
+    }
+}
+
+class subCatalogComps extends mainCatalog {
+    private $productPurpose; // предназначение товара
+    public function __construct($id, $sectionName, $categoryName, $productName, $productPrice, $productPurpose) {
+        parent::__construct($id, $sectionName, $categoryName, $productName, $productPrice);
+        $this -> productPurpose = $productPurpose;
+    }
+    public function getProductPurpose(){
+        return $this -> productPurpose;
+    }    
+    public function getInfo() {
+        $info = parent::getInfo() . "Предназначение товара: " . $this -> productPurpose . "<br>";
+        return $info;
+    }
+}
+
+class subCatalogTVs extends mainCatalog {
+    private $productDiag; // диагональ экрана
+    public function __construct($id, $sectionName, $categoryName, $productName, $productPrice, $productDiag) {
+        parent::__construct($id, $sectionName, $categoryName, $productName, $productPrice);
+        $this -> productDiag = $productDiag;
+    }
+    public function getProductDiag(){
+        return $this -> productDiag;
+    }    
+    public function getInfo() {
+        $info = parent::getInfo() . "Размер диагонали: " . $this -> productDiag . " дюйма<br>";
+        return $info;
+    }
+}
+
+$product = new subCatalogComps(12, 'Компьютеры', 'Ноутбуки', 'HP Pavilion PZ-356', 56499, 'Для работы и офиса');
+echo $product -> getInfo() . "<hr>";
+
+$product = new subCatalogTVs(131, 'Телевизоры', 'Телевизоры Full HD', 'Телевизор LED Supra 22" STV-LC22LT0060F', 6930, 32);
+echo $product -> getInfo() . "<hr>";
+?>
+
     <h4>5. Дан код. Что он выведет на каждом шаге?</h4>
     <pre>
     class A {
